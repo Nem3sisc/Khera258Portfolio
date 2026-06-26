@@ -1,0 +1,2000 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khera Agencia de serviços</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --black: #050508;
+      --deep: #0a0a12;
+      --surface: #10101c;
+      --card: #14141f;
+      --gold: #f5c518;
+      --amber: #ff8c00;
+      --fire: #ff3d00;
+      --electric: #00e5ff;
+      --violet: #7c3aed;
+      --text: #f0eee8;
+      --muted: #9090a0;
+      --border: rgba(245, 197, 24, 0.15);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* CUSTOM CURSOR */
+    .cursor {
+      width: 12px;
+      height: 12px;
+      background: var(--gold);
+      border-radius: 50%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, width 0.2s, height 0.2s, background 0.2s;
+      mix-blend-mode: difference;
+    }
+
+    .cursor-ring {
+      width: 36px;
+      height: 36px;
+      border: 1.5px solid var(--gold);
+      border-radius: 50%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.12s ease, width 0.2s, height 0.2s;
+      opacity: 0.6;
+    }
+
+    body:hover .cursor {
+      opacity: 1;
+    }
+
+    /* PARTICLES CANVAS */
+    #particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.2rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid transparent;
+      transition: all 0.4s;
+      backdrop-filter: blur(0px);
+    }
+
+    nav.scrolled {
+      background: rgba(5, 5, 8, 0.9);
+      border-bottom-color: var(--border);
+      backdrop-filter: blur(20px);
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.12em;
+      color: var(--text);
+      text-decoration: none;
+      position: static;
+    }
+
+    .logo span {
+      color: var(--gold);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-links a:hover::after {
+      transform: scaleX(1);
+    }
+
+    .nav-cta {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--gold);
+      border: none;
+      padding: 0.65rem 1.6rem;
+      cursor: none;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .nav-cta:hover {
+      background: var(--amber);
+      transform: translateY(-1px);
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: radial-gradient(ellipse 80% 60% at 50% 110%, rgba(124, 58, 237, 0.2) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 20% 50%, rgba(255, 61, 0, 0.12) 0%, transparent 50%),
+        var(--black);
+    }
+
+    .hero-video-wrap {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .hero-video-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(5, 5, 8, 0.3) 0%, rgba(5, 5, 8, 0.6) 60%, var(--black) 100%),
+        linear-gradient(to right, rgba(5, 5, 8, 0.5) 0%, transparent 40%, transparent 60%, rgba(5, 5, 8, 0.5) 100%);
+    }
+
+    .hero-bg-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.45;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 2rem;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.3s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4.5rem, 12vw, 10rem);
+      line-height: 0.92;
+      letter-spacing: 0.04em;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.5s forwards;
+    }
+
+    .hero-title .line2 {
+      display: block;
+      -webkit-text-stroke: 1px rgba(245, 197, 24, 0.5);
+      color: transparent;
+      font-size: clamp(5rem, 14vw, 11rem);
+    }
+
+    .hero-title .gold {
+      color: var(--gold);
+      -webkit-text-stroke: 0;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: rgba(240, 238, 232, 0.65);
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.7s forwards;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      justify-content: center;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.9s forwards;
+    }
+
+    .tag {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.45rem 1rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: rgba(245, 197, 24, 0.04);
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeUp 0.9s 1.1s forwards;
+    }
+
+    .btn-primary {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 1rem 2.5rem;
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      cursor: none;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--amber);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary:hover::before {
+      transform: scaleX(1);
+    }
+
+    .btn-primary span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-ghost {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 1rem 2.5rem;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid rgba(240, 238, 232, 0.25);
+      cursor: none;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Syne', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      animation: fadeIn 1s 1.5s both;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 1.8s infinite;
+    }
+
+    /* SECTION COMMONS */
+    section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .section-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 1;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.5rem;
+    }
+
+    /* STATS STRIP */
+    .stats-strip {
+      padding: 3rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: rgba(245, 197, 24, 0.02);
+    }
+
+    .stats-inner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 1rem;
+      border-right: 1px solid var(--border);
+    }
+
+    .stat-item:last-child {
+      border-right: none;
+    }
+
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem;
+      letter-spacing: 0.05em;
+      color: var(--gold);
+      display: block;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    /* SERVICES */
+    .services {
+      padding: 8rem 0;
+    }
+
+    .services-header {
+      margin-bottom: 4rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .service-card {
+      background: var(--card);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+      cursor: none;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at bottom left, rgba(245, 197, 24, 0.08) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .service-card:hover {
+      background: #1a1a28;
+    }
+
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      display: block;
+      filter: drop-shadow(0 0 12px rgba(245, 197, 24, 0.4));
+    }
+
+    .service-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.8rem;
+    }
+
+    .service-card p {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .service-line {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gold);
+      transition: width 0.4s;
+    }
+
+    .service-card:hover .service-line {
+      width: 100%;
+    }
+
+    /* GALLERY */
+    .gallery {
+      padding: 8rem 0;
+      background: var(--deep);
+    }
+
+    .gallery-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: 280px 280px;
+      gap: 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      background: var(--surface);
+      cursor: none;
+    }
+
+    .gallery-item:first-child {
+      grid-row: span 2;
+    }
+
+    .gallery-item img,
+    .gallery-item video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      display: block;
+    }
+
+    .gallery-item:hover img,
+    .gallery-item:hover video {
+      transform: scale(1.06);
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(5, 5, 8, 0.7) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      display: flex;
+      align-items: flex-end;
+      padding: 1.5rem;
+    }
+
+    .gallery-item:hover .gallery-overlay {
+      opacity: 1;
+    }
+
+    .gallery-overlay span {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* Placeholder gallery images using gradients */
+    .gal-1 {
+      background: linear-gradient(135deg, #1a0a30 0%, #3d1a70 40%, #1a0a30 100%);
+    }
+
+    .gal-2 {
+      background: linear-gradient(135deg, #300a0a 0%, #7d1a00 50%, #300a0a 100%);
+    }
+
+    .gal-3 {
+      background: linear-gradient(135deg, #0a1a30 0%, #004d7d 50%, #0a1a30 100%);
+    }
+
+    .gal-4 {
+      background: linear-gradient(135deg, #1a1a00 0%, #7d6500 50%, #1a1a00 100%);
+    }
+
+    .gal-5 {
+      background: linear-gradient(135deg, #0a2a1a 0%, #007d4d 50%, #0a2a1a 100%);
+    }
+
+    .gallery-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+    }
+
+    .gallery-placeholder .gp-icon {
+      font-size: 3rem;
+      opacity: 0.5;
+    }
+
+    .gallery-placeholder .gp-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.4;
+    }
+
+    /* VIDEO SECTION */
+    .video-section {
+      padding: 8rem 0;
+    }
+
+    .video-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .video-text .section-title {
+      margin-bottom: 1.2rem;
+    }
+
+    .video-text p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+
+    .video-frame {
+      position: relative;
+      aspect-ratio: 16/9;
+      background: var(--surface);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    /* PACKAGES */
+    .packages {
+      padding: 8rem 0;
+      background: var(--deep);
+    }
+
+    .packages-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .packages-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .pkg-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s;
+      cursor: none;
+    }
+
+    .pkg-card.featured {
+      border-color: var(--gold);
+      background: linear-gradient(145deg, #1a1400 0%, #141000 100%);
+    }
+
+    .pkg-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .pkg-badge {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      background: var(--gold);
+      color: var(--black);
+    }
+
+    .pkg-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .pkg-tagline {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .pkg-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.2rem;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .pkg-currency {
+      font-size: 1rem;
+      vertical-align: top;
+      margin-top: 0.5rem;
+      display: inline-block;
+    }
+
+    .pkg-period {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    .pkg-features {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .pkg-features li {
+      font-size: 0.85rem;
+      color: var(--muted);
+      padding: 0.55rem 0;
+      border-bottom: 1px solid rgba(245, 197, 24, 0.07);
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .pkg-features li::before {
+      content: '✦';
+      color: var(--gold);
+      font-size: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    /* TESTIMONIALS */
+    .testimonials {
+      padding: 8rem 0;
+    }
+
+    .testimonials-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .testimonials-slider {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .testi-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      position: relative;
+    }
+
+    .testi-quote {
+      font-size: 3rem;
+      line-height: 1;
+      color: var(--gold);
+      opacity: 0.3;
+      font-family: Georgia, serif;
+      margin-bottom: 0.5rem;
+    }
+
+    .testi-text {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: rgba(240, 238, 232, 0.75);
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .testi-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--violet), var(--gold));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .testi-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .testi-role {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .stars {
+      color: var(--gold);
+      font-size: 0.7rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* BOOKING */
+    .booking {
+      padding: 8rem 0;
+      background: var(--deep);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .booking::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .booking-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .booking-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .booking-header .section-title {
+      margin-bottom: 0.8rem;
+    }
+
+    .booking-header p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .booking-form {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 3rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-group.full {
+      grid-column: span 2;
+    }
+
+    .form-group label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: var(--surface);
+      border: 1px solid rgba(245, 197, 24, 0.12);
+      color: var(--text);
+      padding: 0.85rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+      cursor: none;
+    }
+
+    .form-group select option {
+      background: var(--surface);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(144, 144, 160, 0.5);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-submit {
+      grid-column: span 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+    }
+
+    .form-submit p {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .btn-submit {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 1rem 3rem;
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      cursor: none;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+    }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 3rem;
+    }
+
+    .form-success .success-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-success h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-success p {
+      color: var(--muted);
+    }
+
+    /* CONTACT STRIP */
+    .contact-strip {
+      padding: 5rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .contact-brand .logo {
+      font-size: 2rem;
+    }
+
+    .contact-brand p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-top: 0.8rem;
+    }
+
+    .contact-info h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .contact-info p,
+    .contact-info a {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 2;
+      text-decoration: none;
+      display: block;
+      transition: color 0.2s;
+    }
+
+    .contact-info a:hover {
+      color: var(--gold);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .social-link {
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: all 0.2s;
+      text-decoration: none;
+      cursor: none;
+    }
+
+    .social-link:hover {
+      border-color: var(--gold);
+      background: rgba(245, 197, 24, 0.05);
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 1.5rem 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    footer p {
+      font-size: 0.75rem;
+      color: rgba(144, 144, 160, 0.5);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes scrollPulse {
+
+      0%,
+      100% {
+        transform: scaleY(1);
+        opacity: 0.6;
+      }
+
+      50% {
+        transform: scaleY(0.5);
+        opacity: 0.2;
+      }
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    /* REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s, transform 0.7s;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* TICKER */
+    .ticker-wrap {
+      overflow: hidden;
+      background: var(--gold);
+      padding: 0.7rem 0;
+      size: 2px;
+    }
+
+    .ticker {
+      display: flex;
+      gap: 3rem;
+      animation: ticker 20s linear infinite;
+      width: max-content;
+    }
+
+    .ticker-item {
+
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.15em;
+      color: var(--black);
+      white-space: nowrap;
+    }
+
+    .ticker-dot {
+      color: rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes ticker {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* MOBILE */
+    @media (max-width: 900px) {
+      nav {
+        padding: 1rem 1.5rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .stats-inner {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stat-item:nth-child(2) {
+        border-right: none;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+
+      .gallery-item:first-child {
+        grid-row: span 1;
+      }
+
+      .video-wrap {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .packages-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .testimonials-slider {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group.full {
+        grid-column: span 1;
+      }
+
+      .form-submit {
+        grid-column: span 1;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .contact-inner {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="particles"></canvas>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#" class="logo">KHERA.258<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#galeria">Galeria</a></li>
+      <li><a href="#pacotes">Pacotes</a></li>
+      <li><a href="#sobre">Sobre</a></li>
+    </ul>
+    <a href="#agendamento" class="nav-cta">Agendar evento</a>
+  </nav>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap" style="margin-top:2;">
+    <div class="ticker" id="ticker">
+      <span class="ticker-item">SOM PROFISSIONAL <span class="ticker-dot"></span></span>
+      <span class="ticker-item">ILUMINAÇÃO LED <span class="ticker-dot"></span></span>
+      <span class="ticker-item">PALCOS & ESTRUTURAS <span class="ticker-dot"></span></span>
+      <span class="ticker-item">DJ RESIDENTE <span class="ticker-dot"></span></span>
+      <span class="ticker-item">EFEITOS ESPECIAIS <span class="ticker-dot"></span></span>
+      <span class="ticker-item">MÚSICA AO VIVO <span class="ticker-dot"></span></span>
+      <span class="ticker-item">FOGOS DE ARTIFÍCIO <span class="ticker-dot"></span></span>
+      <span class="ticker-item">MAPUTO, MOÇAMBIQUE <span class="ticker-dot"></span></span>
+      <span class="ticker-item">SOM PROFISSIONAL <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">ILUMINAÇÃO LED <span class="ticker-dot"></span></span>
+      <span class="ticker-item">PALCOS & ESTRUTURAS <span class="ticker-dot"></span></span>
+      <span class="ticker-item">DJ RESIDENTE <span class="ticker-dot"></span></span>
+      <span class="ticker-item">EFEITOS ESPECIAIS <span class="ticker-dot"></span></span>
+      <span class="ticker-item">MÚSICA AO VIVO <span class="ticker-dot"></span></span>
+      <span class="ticker-item">FOGOS DE ARTIFÍCIO <span class="ticker-dot"></span></span>
+      <span class="ticker-item">MAPUTO, MOÇAMBIQUE <span class="ticker-dot"></span></span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-video-wrap">
+      <div
+        style="width:100%;height:100%;background:linear-gradient(135deg,#050508 0%,#0d0020 25%,#200040 50%,#0d0020 75%,#050508 100%); animation: heroBgPulse 8s ease-in-out infinite;">
+      </div>
+    </div>
+    <div class="hero-content">
+      <br>
+      <h1 class="hero-title">
+        FAZEMOS<br>
+        <span class="line2">EVENTOS</span>
+        <span class="gold"> BRILHAR</span>
+      </h1>
+      <p class="hero-sub">Som imersivo, luz espectacular, palcos memoráveis. Transformamos cada celebração numa
+        experiência inesquecível em Maputo.</p>
+      <div class="hero-tags">
+        <span class="tag">🔊 Som</span>
+        <span class="tag">💡 Luz</span>
+        <span class="tag"> Palcos</span>
+        <span class="tag">🎧 DJ</span>
+        <span class="tag">🎆 Fogos</span>
+        <span class="tag">💨 Fumo</span>
+        <span class="tag">🎵 Música ao vivo</span>
+      </div>
+      <div class="hero-buttons">
+        <a href="#agendamento" class="btn-primary"><span>Agendar agora</span></a>
+        <a href="#galeria" class="btn-ghost">Ver galeria</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span></span>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-strip">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <span class="stat-num" data-count="20">0</span>
+        <span class="stat-label">Eventos realizados</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" data-count="2">0</span>
+        <span class="stat-label">Anos de experiência</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" data-count="70">0</span>
+        <span class="stat-label">Clientes satisfeitos</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" data-count="15">0</span>
+        <span class="stat-label">Técnicos especializados</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="services" id="servicos">
+    <div class="section-wrap">
+      <div class="services-header reveal">
+        <p class="section-label">O que fazemos</p>
+        <h2 class="section-title">NOSSOS SERVIÇOS</h2>
+        <p style="color:var(--muted);max-width:520px;line-height:1.8;font-size:0.95rem;">Equipamentos de última geração,
+          equipa especializada, e uma visão criativa para tornar o seu evento único.</p>
+      </div>
+      <div class="services-grid reveal">
+        <div class="service-card">
+          <span class="service-icon">🔊</span>
+          <h3>Sistema de Som</h3>
+          <p>Line arrays profissionais, subwoofers de alta potência, mixagem ao vivo. Cobertura sonora perfeita para
+            qualquer espaço, de 50 a 10.000 pessoas.</p>
+          <div class="service-line"></div>
+        </div>
+        <div class="service-card">
+          <span class="service-icon">💡</span>
+          <h3>Iluminação & LED</h3>
+          <p>Moving heads, wash lights, pixel bars, mapping de vídeo. Criamos atmosferas luminosas que transformam
+            qualquer palco numa obra de arte visual.</p>
+          <div class="service-line"></div>
+        </div>
+        <div class="service-card">
+          <span class="service-icon">🎭</span>
+          <h3>Palcos & Estruturas</h3>
+          <p>Palcos modulares de todos os tamanhos, torres de PA, tendas e estruturas de suporte para eventos ao ar
+            livre e interiores em Maputo e arredores.</p>
+          <div class="service-line"></div>
+        </div>
+        <div class="service-card">
+          <span class="service-icon">🎧</span>
+          <h3>DJ Profissional</h3>
+          <p>DJs residentes com vasta experiência em eventos corporativos, casamentos, festas e shows. Todos os géneros
+            musicais, do afrobeat ao house e kizomba.</p>
+          <div class="service-line"></div>
+        </div>
+        <div class="service-card">
+          <span class="service-icon">🎆</span>
+          <h3>Efeitos Especiais</h3>
+          <p>Fogos de artifício, máquinas de fumo, CO₂ jets e sparkle machines. Momentos de impacto visual garantido.
+          </p>
+          <div class="service-line"></div>
+        </div>
+        <div class="service-card">
+          <span class="service-icon">🎵</span>
+          <h3>Música ao vivo</h3>
+          <p>Bandas de cultura Moçambicana, grupos de percussão, cantores ao vivo, quartetos de cordas. Arte musical
+            autêntica moçambicana e internacional para o seu evento.</p>
+          <div class="service-line"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="galeria">
+    <div class="gallery-header section-wrap reveal">
+      <p class="section-label">Portfólio</p>
+      <h2 class="section-title">NOSSA GALERIA</h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item gal-1">
+        <img src="https://i.postimg.cc/BbnfK5Vy/IMG-20251205-WA0108.jpg" alt="Grande show — Igreja">
+        <div class="gallery-overlay"><span>Casamento Berta Chirindza</span></div>
+      </div>
+      <div class="gallery-item gal-2">
+        <img src="https://i.postimg.cc/jd02qnHN/IMG-20251205-WA0114.jpg" alt="Reveillon 2024">
+        <div class="gallery-overlay"><span>Abertura de sala</span></div>
+      </div>
+      <div class="gallery-item gal-3">
+        <img src="https://i.postimg.cc/TwPtjkT0/IMG-8125.jpg" alt="Iluminação LED">
+        <div class="gallery-overlay"><span>Casamento Yuran e Clara</span></div>
+      </div>
+      <div class="gallery-item gal-4">
+        <img src="https://i.postimg.cc/15t0Xgvx/Screenshot-20260518-112904-Gallery(1).jpg" alt="Festival de música">
+        <div class="gallery-overlay"><span>Fogos de artificio</span></div>
+      </div>
+      <div class="gallery-item gal-5">
+        <img src="https://i.postimg.cc/76KGr9vW/IMG-20251230-235319-123.jpg" alt="Casamentos">
+        <div class="gallery-overlay"><span>Dj e som de qualidade</span></div>
+      </div>
+      <div class="gallery-item gal-6">
+        <img src="https://i.postimg.cc/xT2jVDQv/Maura-1.jpg" alt="Evento — luzes e palco">
+        <div class="gallery-overlay"><span>Luzes & Fumaça</span></div>
+      </div>
+      <div class="gallery-item gal-7">
+        <img src="https://i.postimg.cc/0QmM9yHG/lizet-e-elias.jpg" alt="Evento — DJ e som">
+        <div class="gallery-overlay"><span>Qualidade para si</span></div>
+      </div>
+      <div class="gallery-item gal-8">
+        <img src="https://i.postimg.cc/zBHh6ZrP/shoot2.jpg" alt="Evento — iluminação ao vivo">
+        <div class="gallery-overlay"><span>Khera After Servicess</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO SECTION -->
+  <section class="video-section" id="sobre">
+    <div class="video-wrap">
+      <div class="video-text reveal">
+        <p class="section-label">Sobre nós</p>
+        <h2 class="section-title">EXPERIÊNCIA QUE<br><span style="color:var(--gold)">TRANSFORMA</span></h2>
+        <p>A Khera é a empresa que atua em produção de eventos em Maputo. Com anos de experiência, já realizamos desde
+          pequenas celebrações íntimas até festivais com milhares de pessoas.</p>
+        <p style="margin-bottom:2.5rem">A nossa equipa de 15 técnicos especializados garante que cada detalhe — do som à
+          iluminação, dos efeitos especiais à logística — seja executado com precisão e criatividade.</p>
+        <a href="#agendamento" class="btn-primary"><span>Solicitar orçamento</span></a>
+      </div>
+      <div class="video-frame reveal">
+        <div
+          style="width:100%;height:100%;background:linear-gradient(135deg,#1a0a30 0%,#3d1a70 40%,#1a0a30 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;">
+          <div style="font-size:4rem;margin-bottom:1rem;animation:float 3s ease-in-out infinite">🎆</div>
+          <p
+            style="font-family:'Syne',sans-serif;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(240,238,232,0.4)">
+            Demonstração dos nossos serviços</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PACKAGES -->
+  <section class="packages" id="pacotes">
+    <div class="packages-header section-wrap reveal">
+      <p class="section-label">Investimento</p>
+      <h2 class="section-title">PACOTES</h2>
+      <p style="color:var(--muted);max-width:480px;margin:0 auto;line-height:1.8;font-size:0.95rem;">Escolha o pacote
+        ideal para o seu evento. Todos os preços incluem montagem, operação e desmontagem.</p>
+    </div>
+    <div class="packages-grid">
+      <div class="pkg-card reveal">
+        <div class="pkg-name">ESSENCIAL</div>
+        <div class="pkg-tagline">Perfeito para eventos íntimos</div>
+        <div class="pkg-price"><span class="pkg-currency">MZN </span>15.000</div>
+        <div class="pkg-period">por evento (até 200 pessoas)</div>
+        <ul class="pkg-features">
+          <li>Sistema de som (2kW)</li>
+          <li>Iluminação básica (8 par LEDs)</li>
+          <li>Mixer e microfones (2x)</li>
+          <li>Técnico de som ao vivo</li>
+          <li>DJ por 4 horas</li>
+        </ul>
+        <a href="#agendamento" class="btn-primary" style="width:100%;text-align:center"><span>Escolher</span></a>
+      </div>
+      <div class="pkg-card featured reveal">
+        <div class="pkg-badge">Popular</div>
+        <div class="pkg-name">PREMIUM</div>
+        <div class="pkg-tagline">Para grandes celebrações</div>
+        <div class="pkg-price"><span class="pkg-currency">MZN </span>35.000</div>
+        <div class="pkg-period">por evento (até 600 pessoas)</div>
+        <ul class="pkg-features">
+          <li>Line array 10kW + subwoofers</li>
+          <li>Luzes Leds, Robos e lasers</li>
+          <li>Palco 6x4m montado</li>
+          <li>DJ + Música ao vivo (2h)</li>
+          <li>Máquinas de fumo + confetti</li>
+          <li>2 técnicos especializados</li>
+        </ul>
+        <a href="#agendamento" class="btn-primary" style="width:100%;text-align:center"><span>Escolher</span></a>
+      </div>
+      <div class="pkg-card reveal">
+        <div class="pkg-name">FESTIVAL</div>
+        <div class="pkg-tagline">Produções de grande escala</div>
+        <div class="pkg-price"><span class="pkg-currency">MZN </span>80.000</div>
+        <div class="pkg-period">por evento (1000+ pessoas)</div>
+        <ul class="pkg-features">
+          <li>Sistema de som completo</li>
+          <li>Palco 12x8m profissional</li>
+          <li>Fogos de artifício (10 min)</li>
+          <li>Equipa completa (6 técnicos)</li>
+          <li>Banda ao vivo + DJ (todo dia)</li>
+        </ul>
+        <a href="#agendamento" class="btn-primary" style="width:100%;text-align:center"><span>Escolher</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="testimonials-header section-wrap reveal">
+      <p class="section-label">Depoimentos</p>
+      <h2 class="section-title">O QUE DIZEM</h2>
+    </div>
+    <div class="testimonials-slider">
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <div class="testi-quote">"</div>
+        <p class="testi-text">O casamento da nossa filha com o Yuran foi absolutamente perfeito. O som era cristalino, a
+          iluminação criou uma atmosfera mágica, e os fogos no final... a nossa família ainda fala sobre isso!</p>
+        <div class="testi-author">
+          <div class="testi-avatar">AM</div>
+          <div>
+            <div class="testi-name">Yuran e Clara</div>
+            <div class="testi-role">Casamento — Quinta Lya, Maputo</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <div class="testi-quote">"</div>
+        <p class="testi-text">Contratamos Khera para o lançamento do nosso produto. A produção foi de nível
+          internacional. Mais de 500 convidados saíram impressionados com a qualidade técnica e visual.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">Ds</div>
+          <div>
+            <div class="testi-name">Dercio</div>
+            <div class="testi-role">Dercio - Strix emp</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <div class="testi-quote">"</div>
+        <p class="testi-text">Meu casamento foi absolutamente perfeito. O som era cristalino, a iluminação criou uma
+          atmosfera mágica, e os fogos no final...</p>
+        <div class="testi-author">
+          <div class="testi-avatar">FS</div>
+          <div>
+            <div class="testi-name">Fidelio Sibinde</div>
+            <div class="testi-role">Noivo - Fidelio Sibinde</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING -->
+  <section class="booking" id="agendamento">
+    <div class="booking-inner">
+      <div class="booking-header reveal">
+        <p class="section-label">Agendamento</p>
+        <h2 class="section-title">MARQUE O SEU<br><span style="color:var(--gold)">EVENTO</span></h2>
+        <p>Preencha o formulário abaixo e a nossa equipa entrará em contacto em até 24 horas com um orçamento
+          personalizado.</p>
+      </div>
+      <div class="booking-form reveal">
+        <div id="bookingFormWrap">
+          <div class="form-grid" id="bookingForm">
+            <div class="form-group">
+              <label>Nome Completo *</label>
+              <input type="text" placeholder="O seu nome" id="f-nome">
+            </div>
+            <div class="form-group">
+              <label>Telefone / WhatsApp *</label>
+              <input type="tel" placeholder="+258 84 000 0000" id="f-tel">
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" placeholder="email@exemplo.com" id="f-email">
+            </div>
+            <div class="form-group">
+              <label>Tipo de Evento *</label>
+              <select id="f-tipo">
+                <option value="" disabled selected>Seleccionar tipo</option>
+                <option>Casamento</option>
+                <option>Festa de Aniversário</option>
+                <option>Evento Corporativo</option>
+                <option>Festival / Concerto</option>
+                <option>Lançamento de Produto</option>
+                <option>Formatura / Baile</option>
+                <option>Evento Cultural</option>
+                <option>Outro</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Data do Evento *</label>
+              <input type="date" id="f-data">
+            </div>
+            <div class="form-group">
+              <label>Número de Convidados *</label>
+              <select id="f-guests">
+                <option value="" disabled selected>Estimativa</option>
+                <option>Até 50 pessoas</option>
+                <option>50 — 150 pessoas</option>
+                <option>150 — 300 pessoas</option>
+                <option>300 — 600 pessoas</option>
+                <option>600 — 1000 pessoas</option>
+                <option>Mais de 1000 pessoas</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Pacote de Interesse</label>
+              <select id="f-pacote">
+                <option value="" disabled selected>Escolher pacote</option>
+                <option>Essencial (MZN 45.000)</option>
+                <option>Premium (MZN 95.000)</option>
+                <option>Festival (MZN 250.000)</option>
+                <option>Orçamento personalizado</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Local do Evento</label>
+              <input type="text" placeholder="Ex: Polana, Sommerschield, Matola..." id="f-local">
+            </div>
+            <div class="form-group full">
+              <label>Serviços Necessários</label>
+              <div style="display:flex;flex-wrap:wrap;gap:0.6rem;margin-top:0.3rem" id="servicos-check">
+                <label class="svc-check"><input type="checkbox" value="Som"> <span>🔊 Som</span></label>
+                <label class="svc-check"><input type="checkbox" value="Luz"> <span>💡 Luz</span></label>
+                <label class="svc-check"><input type="checkbox" value="Palco"> <span>🎭 Palco</span></label>
+                <label class="svc-check"><input type="checkbox" value="DJ"> <span>🎧 DJ</span></label>
+                <label class="svc-check"><input type="checkbox" value="Fogos"> <span>🎆 Fogos</span></label>
+                <label class="svc-check"><input type="checkbox" value="Fumo"> <span>💨 Fumo</span></label>
+                <label class="svc-check"><input type="checkbox" value="Banda ao vivo"> <span>🎵 Banda</span></label>
+                <label class="svc-check"><input type="checkbox" value="Confetti"> <span> Mestres de
+                    cerimonias</span></label>
+              </div>
+            </div>
+            <div class="form-group full">
+              <label>Detalhes Adicionais</label>
+              <textarea placeholder="Descreva o seu evento, requisitos especiais, tema, etc." id="f-msg"></textarea>
+            </div>
+            <div class="form-submit">
+              <p>📍 Servimos Maputo e arredores.<br>Resposta em até 24h.</p>
+              <button class="btn-submit" onclick="submitForm()">Enviar Pedido ✦</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-success" id="formSuccess">
+          <div class="success-icon">🎆</div>
+          <h3>PEDIDO RECEBIDO!</h3>
+          <p>Obrigado pelo seu contacto. A nossa equipa analisará o seu pedido<br>e entrará em contacto em até 24 horas
+            via WhatsApp ou email.</p>
+          <br>
+          <a href="https://wa.me/258844441625" class="btn-primary" style="display:inline-block;margin-top:1rem"><span>💬
+              Falar no WhatsApp</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT STRIP -->
+  <section class="contact-strip">
+    <div class="contact-inner section-wrap">
+      <div class="contact-brand">
+        <a href="#" class="logo">Khera.258<span>.</span></a>
+        <p>Produção de eventos profissional em Maputo. Som, luz, palcos, DJ, efeitos especiais e muito mais desde 2023.
+        </p>
+        <div class="social-links" style="margin-top:1.5rem">
+          <a class="social-link" href="https://www.facebook.com/profile.php?id=61586129974563">📘</a>
+          <a class="social-link" href="https://www.instagram.com/khera.258services?igsh=MmdzdzVqNXJyYml0/">📸</a>
+          <a class="social-link" href="https://wa.me/258844441625">▶️</a>
+        </div>
+      </div>
+      <div class="contact-info">
+        <h4>Contacto</h4>
+        <a href="tel:+258844441625">+258 84 444 1625</a>
+        <a href="tel:+258877661625">+258 87 766 1625</a>
+        <a href="kherana27@gmail.com">kherana27@gmail.com</a>
+      </div>
+      <div class="contact-info">
+        <h4>Localização</h4>
+        <p>Guava, Marracuene</p>
+        <p>Marracuene, Maputo</p>
+        <p>Moçambique</p>
+        <p style="margin-top:0.5rem">Seg–Sex: 08h–18h<br>Sáb: 09h–14h</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>©Khera.258 services, Lda. Todos os direitos reservados.</p>
+    <p>Feito por Nelio Mondlane, Desenvolvedor Web em Maputo, Moçambique</p>
+  </footer>
+
+  <style>
+    @keyframes heroBgPulse {
+
+      0%,
+      100% {
+        filter: brightness(1);
+      }
+
+      50% {
+        filter: brightness(1.15);
+      }
+    }
+
+    .svc-check {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 0.9rem;
+      border: 1px solid rgba(245, 197, 24, 0.12);
+      background: var(--surface);
+      cursor: none;
+      transition: all 0.2s;
+      font-size: 0.82rem;
+      color: var(--muted);
+      user-select: none;
+    }
+
+    .svc-check:hover {
+      border-color: var(--gold);
+      color: var(--text);
+    }
+
+    .svc-check input {
+      display: none;
+    }
+
+    .svc-check:has(input:checked) {
+      border-color: var(--gold);
+      background: rgba(245, 197, 24, 0.1);
+      color: var(--gold);
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      20% {
+        transform: translateX(-8px);
+      }
+
+      40% {
+        transform: translateX(8px);
+      }
+
+      60% {
+        transform: translateX(-5px);
+      }
+
+      80% {
+        transform: translateX(5px);
+      }
+    }
+  </style>
+
+  <script>
+    // CURSOR
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+    });
+
+    function animRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animRing);
+    }
+    animRing();
+
+    document.querySelectorAll('a, button, .service-card, .pkg-card, .gallery-item').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.width = '20px'; cursor.style.height = '20px';
+        ring.style.width = '50px'; ring.style.height = '50px';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.width = '12px'; cursor.style.height = '12px';
+        ring.style.width = '36px'; ring.style.height = '36px';
+      });
+    });
+
+    // NAVBAR SCROLL
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', scrollY > 60);
+    });
+
+    // PARTICLES
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    canvas.width = innerWidth; canvas.height = innerHeight;
+    window.addEventListener('resize', () => { canvas.width = innerWidth; canvas.height = innerHeight; });
+
+    const particles = Array.from({ length: 80 }, () => ({
+      x: Math.random() * innerWidth,
+      y: Math.random() * innerHeight,
+      r: Math.random() * 1.5 + 0.3,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      a: Math.random(),
+      va: (Math.random() - 0.5) * 0.005,
+      color: Math.random() < 0.5 ? [245, 197, 24] : Math.random() < 0.5 ? [124, 58, 237] : [0, 229, 255]
+    }));
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy; p.a += p.va;
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+        if (p.a < 0 || p.a > 1) p.va *= -1;
+        ctx.globalAlpha = p.a * 0.5;
+        ctx.fillStyle = `rgb(${p.color})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      requestAnimationFrame(drawParticles);
+    }
+    drawParticles();
+
+    // SCROLL REVEAL
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+        }
+      });
+    }, { threshold: 0.1 });
+    revealEls.forEach(el => observer.observe(el));
+
+    // COUNT-UP STATS
+    function countUp(el, target) {
+      let current = 0;
+      const step = target / 60;
+      const timer = setInterval(() => {
+        current += step;
+        if (current >= target) { current = target; clearInterval(timer); }
+        el.textContent = Math.floor(current) + (target > 100 ? '+' : '');
+      }, 25);
+    }
+
+    const statsObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          document.querySelectorAll('[data-count]').forEach(el => {
+            countUp(el, parseInt(el.dataset.count));
+          });
+          statsObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.5 });
+    statsObserver.observe(document.querySelector('.stats-strip'));
+
+    // FORM SUBMIT
+    function submitForm() {
+      const nome = document.getElementById('f-nome').value.trim();
+      const tel = document.getElementById('f-tel').value.trim();
+      const tipo = document.getElementById('f-tipo').value;
+      const data = document.getElementById('f-data').value;
+
+      if (!nome || !tel || !tipo || !data) {
+        const form = document.getElementById('bookingForm');
+        form.style.animation = 'none';
+        form.offsetHeight;
+        form.style.animation = 'shake 0.4s ease';
+        setTimeout(() => { form.style.animation = ''; }, 400);
+
+        [['f-nome', nome], ['f-tel', tel], ['f-tipo', tipo], ['f-data', data]].forEach(([id, val]) => {
+          if (!val) {
+            const el = document.getElementById(id);
+            el.style.borderColor = 'var(--fire)';
+            setTimeout(() => el.style.borderColor = '', 2000);
+          }
+        });
+        return;
+      }
+
+      const convidados = document.getElementById('f-guests')?.value || '';
+      const pacote = document.getElementById('f-pacote')?.value || '';
+      const local = document.getElementById('f-local')?.value || '';
+
+      const servicos = Array.from(document.querySelectorAll('#servicos-check input[type="checkbox"]:checked'))
+        .map(cb => cb.value);
+
+      const detalhes = document.getElementById('f-msg')?.value || '';
+
+      const mensagem = [
+        'Olá Khera.258! Quero fazer um orçamento.',
+        '',
+        `Nome: ${nome}`,
+        `Telefone/WhatsApp: ${tel}`,
+        `Tipo de evento: ${tipo}`,
+        `Data do evento: ${data}`,
+        `Convidados: ${convidados}`,
+        `Pacote de interesse: ${pacote}`,
+        `Local do evento: ${local}`,
+        `Serviços: ${servicos.length ? servicos.join(', ') : '-'}`,
+        detalhes ? `Detalhes: ${detalhes}` : '',
+        '',
+        'Obrigado!'
+      ].filter(Boolean).join('\n');
+
+      const whatsappNumber = '258844441625';
+      const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(mensagem)}`;
+
+      document.getElementById('bookingFormWrap').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+
+      setTimeout(() => {
+        window.open(waUrl, '_blank');
+      }, 400);
+    }
+  </script>
+
+</body>
+
+</html>
